@@ -1,0 +1,22 @@
+version: "3"
+services:
+  database:
+    image: postgres:12.1-alpine
+    environment:
+      - POSTGRES_USER=yz
+      - POSTGRES_PASSWORD=805880
+      - POSTGRES_DB=yzdb
+    volumes:
+      - ./db:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d
+    tty: true
+  nodets:
+    build: .
+    depends_on:
+      - database
+    volumes:
+      - .:/app
+    tty: true
+volumes: 
+  database:
+    driver: local
