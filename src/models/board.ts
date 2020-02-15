@@ -1,5 +1,6 @@
 import { pool } from "../pool";
 import nanoid = require("nanoid");
+import uuid = require("uuid");
 
 export class Board {
     id!: string;
@@ -29,16 +30,40 @@ export class Board {
                     name: name,
                     created_at: new Date()
                 });
-                console.log(Object.values(newInstance));
-                
+
                 client
-                    .query("insert into board values($1, $2, $3)", 
-                            Object.values(newInstance))
+                    .query("insert into board values($1, $2, $3)",
+                        Object.values(newInstance))
+                    .then(r => resolve(newInstance))
+                    .catch(console.error);
+            });
+        });
+    }
+
+    async save(): Promise<Board> {
+        return new Promise(resolve => {
+            pool.connect((err, client) => {
+                client
+                    .query("update board set name=$1 where id=$2",
+                        [this.name, this.id])
+                    .then(r => resolve(this))
+                    .catch(console.error);
+            });
+        });
+    }
+
+    async delete(): Promise<Board> {
+        return new Promise(resolve => {
+            pool.connect((err, client) => {
+                client
+                    .query("delete from board where id=$1",
+                        [this.id])
                     .then(r => {
-                        resolve(newInstance);
+                        this.id = "N/A";
+                        resolve(this);
                     })
                     .catch(console.error);
             })
-        })
+        });
     }
 }
