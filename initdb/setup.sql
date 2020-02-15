@@ -1,6 +1,7 @@
-CREATE TABLE yztb(
-    id INT,
-    name char(32)
+CREATE TABLE board(
+    id char(8) PRIMARY KEY,
+    name varchar(32) NOT NULL,
+    crated_at timestamp default CURRENT_TIMESTAMP
 );
 
-INSERT INTO yztb VALUES (2, 'Ishiyama');
+INSERT INTO board VALUES('FzByAeJK', 'テスト用ボード！');

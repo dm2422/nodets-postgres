@@ -7,7 +7,7 @@ services:
       - POSTGRES_PASSWORD=805880
       - POSTGRES_DB=yzdb
     volumes:
-      - ./db:/var/lib/postgresql/data
+      # - ./db:/var/lib/postgresql/data
       - ./initdb:/docker-entrypoint-initdb.d
     tty: true
   nodets:
@@ -17,7 +17,10 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
+      - ~/.gitconfig:/etc/gitconfig
     tty: true
+    ports: 
+    - 8000:8000
 volumes: 
   database:
     driver: local
