@@ -1,10 +1,10 @@
 import { pool } from "../pool";
 import nanoid = require("nanoid");
-import uuid = require("uuid");
 
 export class Board {
     id!: string;
     name!: string;
+    admin_key!: string;
     created_at!: Date;
 
     constructor(init?: Partial<Board>) {
@@ -28,11 +28,12 @@ export class Board {
                 const newInstance = new Board({
                     id: nanoid(8),
                     name: name,
+                    admin_key: nanoid(32),
                     created_at: new Date()
                 });
 
                 client
-                    .query("insert into board values($1, $2, $3)",
+                    .query("insert into board values($1, $2, $3, $4)",
                         Object.values(newInstance))
                     .then(r => resolve(newInstance))
                     .catch(console.error);
