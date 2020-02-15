@@ -1,15 +1,19 @@
 // used in "board/"
 
 import express = require("express");
-import nanoid = require("nanoid");
-import { getBoardByID } from "../queries";
+import { Board } from "../models/board";
 
 const router = express.Router();
 
 router.get("/:id", async (req, res, next) => {
-    console.log("Board access " + req.params.id + ".");
-    const user = await getBoardByID(req.params.id);
-    res.json(user);
+    const board = await Board.get(req.params.id);
+    res.json(board);
+});
+
+router.post("/", async (req, res, next) => {
+    console.log(req.body);
+    const board = await Board.create(req.body.name);
+    res.json(board);
 });
 
 export { router }

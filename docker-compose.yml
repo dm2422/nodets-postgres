@@ -10,6 +10,8 @@ services:
       # - ./db:/var/lib/postgresql/data
       - ./initdb:/docker-entrypoint-initdb.d
     tty: true
+    ports:
+      - 5433:5443
   nodets:
     build: .
     depends_on:
@@ -19,8 +21,8 @@ services:
       - /app/node_modules
       - ~/.gitconfig:/etc/gitconfig
     tty: true
-    ports: 
-    - 8000:8000
-volumes: 
+    ports:
+      - 8000:8000
+volumes:
   database:
     driver: local
