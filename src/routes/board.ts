@@ -2,10 +2,11 @@
 
 import express = require("express");
 import { Board } from "../models/board";
-import { isNull, isNullOrUndefined } from "util";
+import { isNullOrUndefined } from "util";
 
 const router = express.Router();
 
+// Auth check and Board existance check.
 router.all("/:id", async (req, res, next) => {
     // There not any auth code.
     if (isNullOrUndefined(req.query.auth)) {
@@ -35,7 +36,7 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
     const board = await Board.get(req.params.id);
-    board.name = req.body.name;
+    board.title = req.body.title;
     board.save();
     res.json(board);
 });

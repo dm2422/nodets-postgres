@@ -3,7 +3,7 @@ import nanoid = require("nanoid");
 
 export class Board {
     id!: string;
-    name!: string;
+    title!: string;
     admin_key!: string;
     created_at!: Date;
 
@@ -23,12 +23,12 @@ export class Board {
         });
     }
 
-    static async create(name: string): Promise<Board> {
+    static async create(title: string): Promise<Board> {
         return new Promise(resolve => {
             pool.connect((err, client) => {
                 const newInstance = new Board({
                     id: nanoid(8),
-                    name: name,
+                    title: title,
                     admin_key: nanoid(32),
                     created_at: new Date()
                 });
@@ -47,7 +47,7 @@ export class Board {
             pool.connect((err, client) => {
                 client
                     .query("update board set name=$1 where id=$2",
-                        [this.name, this.id])
+                        [this.title, this.id])
                     .then(r => resolve(this))
                     .catch(console.error);
             });
@@ -62,6 +62,7 @@ export class Board {
                         [this.id])
                     .then(r => {
                         this.id = "N/A";
+                        this.admin_key = "N/A";
                         resolve(this);
                     })
                     .catch(console.error);

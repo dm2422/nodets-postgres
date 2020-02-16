@@ -1,13 +1,31 @@
 CREATE TABLE board(
-    id varchar(8) PRIMARY KEY,
-    name varchar(128) NOT NULL,
-    admin_key varchar(32) NOT NULL,
-    crated_at timestamp
+    id CHAR(8) PRIMARY KEY,
+    title VARCHAR(128) NOT NULL,
+    admin_key CHAR(32) NOT NULL,
+    crated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE auth (
+	id CHAR(8) PRIMARY KEY,
+  	belongs_to CHAR(8) NOT NULL,
+  	auth VARCHAR(32) NOT NULL,
+	title VARCHAR(128) NOT NULL,
+  	roler BOOL NOT NULL DEFAULT FALSE,
+  	editor BOOL NOT NULL DEFAULT FALSE,
+  	viewer BOOL NOT NULL DEFAULT FALSE,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	opts JSONB DEFAULT '{}'
 );
 
 INSERT INTO board VALUES(
     'FzByAeJK', 
     'テスト用ボード！', 
-    'b80d01c2bd4e4f56bce71178b7774696',
-    '2004-10-19 10:23:54'
+    'b80d01c2bd4e4f56bce71178b7774696'
+);
+
+INSERT INTO auth VALUES(
+	'1234abcd',
+  	'FzByAeJK',
+ 	'TEST AUTHOR',
+  	'authtest1234'
 );
