@@ -1,6 +1,6 @@
 CREATE TABLE board(
-    id char(8) PRIMARY KEY,
-    name varchar(32) NOT NULL,
+    id varchar(8) PRIMARY KEY,
+    name varchar(128) NOT NULL,
     admin_key varchar(32) NOT NULL,
     crated_at timestamp
 );

@@ -11,6 +11,7 @@ export class Board {
         Object.assign(this, init);
     }
 
+    // Return the Board instance that has no variable members, if the $id is not in db.
     static async get(id: string): Promise<Board> {
         return new Promise(resolve => {
             pool.connect((err, client) => {
@@ -66,5 +67,13 @@ export class Board {
                     .catch(console.error);
             })
         });
+    }
+
+    authorize(auth: string): boolean {
+        return this.admin_key === auth;
+    }
+
+    exists(): boolean {
+        return Object.values(this).length > 0;
     }
 }
