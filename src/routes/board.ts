@@ -2,7 +2,7 @@
 
 import express = require("express");
 import { Board } from "../models/board";
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined, log } from "util";
 
 const router = express.Router();
 
@@ -15,12 +15,12 @@ router.all("/:id", async (req, res, next) => {
     }
     const authCode: string = req.query.auth;
     const board = await Board.get(req.params.id);
-    console.log(board);
-    
+
     if (board.exists() && board.authorize(authCode)) {
         next();
     } else {
         res.status(403).end();
+        return;
     }
 });
 
@@ -30,12 +30,20 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-    const board = await Board.create(req.body.name);
+    if (isNullOrUndefined(req.body.title)) {
+        res.status(400).end();
+        return;
+    }
+    const board = await Board.create(req.body.title);
     res.json(board);
 });
 
 router.put("/:id", async (req, res) => {
     const board = await Board.get(req.params.id);
+    if (isNullOrUndefined(req.body.title)) {
+        res.status(400).end();
+        return;
+    }
     board.title = req.body.title;
     board.save();
     res.json(board);

@@ -4,7 +4,8 @@
     "module": "commonJS",
     "strict": true,
     "outDir": "./dist",
-    "sourceMap": true
+    "sourceMap": true,
+    "esModuleInterop": true
   },
   "include": [
     "./src/**/*.ts"

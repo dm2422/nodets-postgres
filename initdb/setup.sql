@@ -1,7 +1,7 @@
 CREATE TABLE board(
     id CHAR(8) PRIMARY KEY,
     title VARCHAR(128) NOT NULL,
-    admin_key CHAR(32) NOT NULL,
+    admin_auth CHAR(32) NOT NULL,
     crated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

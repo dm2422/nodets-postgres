@@ -8,7 +8,6 @@ ARG USER_GUI=$USER_UID
 WORKDIR /app
 COPY ./package*.json /app/
 RUN npm ci \
-    && npm install -g typescript \
     && apk add git \
     && npm run tsc
 EXPOSE 8000
